@@ -203,33 +203,35 @@ export default function App() {
       </Section>
 
       {/* New Block: Who Am I */}
-      <Section id="who-am-i" className="bg-white border-y border-slate-100 pb-12">
-        <div className="max-w-4xl">
-          <h2 className="text-xl md:text-2xl font-bold text-brand-blue uppercase tracking-tight mb-8">Кто я и почему меня стоит слушать</h2>
-          <div className="grid md:grid-cols-12 gap-8 items-start">
-            <div className="md:col-span-8 space-y-5 text-sm md:text-base leading-relaxed text-slate-700 font-medium">
-              <p>
-                Роман Беляев — стратегический партнёр собственника, который помогает компаниям переходить от ручного управления к более зрелой и устойчивой системе.
-              </p>
-              <p>
-                Я подключаюсь тогда, когда бизнесу нужен не просто совет, а человек, который поможет собрать управленческий контур: структуру, ключевые функции, процессы, продуктовую логику, обучение команды, продажи, автоматизацию и внешний контур.
-              </p>
-              <p className="opacity-75">
-                Моя сильная сторона — видеть бизнес целиком: от целей собственника и логики продукта до людей, процессов, денег, подрядчиков, автоматизации и внедрения.
-              </p>
-            </div>
-            <div className="md:col-span-4 flex flex-col gap-3">
-              {[
-                { icon: Target, text: "стратегический партнёр собственника" },
-                { icon: Zap, text: "практическое усиление управления" },
-                { icon: ShieldCheck, text: "от диагностики до внедрения" }
-              ].map((item, i) => (
-                <div key={i} className="flex items-center gap-3 bg-brand-gray p-3 rounded-xl border border-slate-100">
-                  <item.icon size={16} className="text-brand-blue shrink-0" />
-                  <span className="text-[10px] font-bold uppercase tracking-tight text-brand-blue">{item.text}</span>
+      <Section id="who-am-i" className="bg-white border-y border-slate-100 py-12 md:py-16">
+        <div className="mb-10">
+          <h2 className="text-xl md:text-2xl font-bold text-brand-blue uppercase tracking-tight">Кто я и почему меня стоит слушать</h2>
+        </div>
+        <div className="grid lg:grid-cols-10 gap-x-12 lg:gap-x-16 gap-y-10 items-start">
+          <div className="lg:col-span-6 space-y-6 text-sm md:text-base leading-relaxed text-slate-700 font-medium">
+            <p>
+              Роман Беляев — стратегический партнёр собственника, который помогает компаниям переходить от ручного управления к более зрелой и устойчивой системе.
+            </p>
+            <p>
+              Я подключаюсь тогда, когда бизнесу нужен не просто совет, а человек, который поможет собрать управленческий контур: структуру, ключевые функции, процессы, продуктовую логику, обучение команды, продажи, автоматизацию и внешний контур.
+            </p>
+            <p className="opacity-75">
+              Моя сильная сторона — видеть бизнес целиком: от целей собственника и логики продукта до людей, процессов, денег, подрядчиков, автоматизации и внедрения.
+            </p>
+          </div>
+          <div className="lg:col-span-4 flex flex-col gap-4">
+            {[
+              { icon: Target, text: "стратегический партнёр собственника" },
+              { icon: Zap, text: "практическое усиление управления" },
+              { icon: ShieldCheck, text: "от диагностики до внедрения" }
+            ].map((item, i) => (
+              <div key={i} className="flex items-center gap-4 bg-brand-gray/40 p-4 rounded-xl border border-slate-100 hover:border-slate-200 transition-all shadow-sm">
+                <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shrink-0 shadow-sm border border-slate-100">
+                  <item.icon size={18} className="text-brand-blue" />
                 </div>
-              ))}
-            </div>
+                <span className="text-[10px] font-bold uppercase tracking-tight text-brand-blue leading-snug">{item.text}</span>
+              </div>
+            ))}
           </div>
         </div>
       </Section>
