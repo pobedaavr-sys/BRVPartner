@@ -495,7 +495,7 @@ export default function App() {
 
               <div className="pt-24 border-t border-slate-800/50 flex flex-col md:flex-row justify-between items-center gap-8 text-[10px] uppercase tracking-[0.2em] font-bold text-slate-500">
                 <div className="flex flex-col items-center md:items-start gap-2">
-                  <span className="text-white">© 2024 Роман Беляев</span>
+                  <span className="text-white">© 2026 Роман Беляев</span>
                   <span className="opacity-50 text-[8px] tracking-widest">Стратегический партнёр собственника</span>
                 </div>
                 <div className="flex gap-12">
