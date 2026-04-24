@@ -20,19 +20,23 @@
 }
 
 .container-custom {
-  @apply max-w-[1100px] mx-auto px-6;
+  @apply max-w-[1240px] mx-auto px-6;
 }
 
 .premium-card {
-  @apply bg-white border border-slate-200 rounded-xl p-6 transition-all duration-300 hover:shadow-lg hover:border-blue-400/50;
+  @apply bg-white border border-slate-200 rounded-2xl p-6 transition-all duration-500 hover:shadow-xl hover:shadow-slate-200/50 hover:border-brand-blue/20;
 }
 
 .text-balance {
   text-wrap: balance;
 }
 
+.img-reveal {
+  @apply overflow-hidden rounded-3xl border border-white shadow-2xl;
+}
+
 @layer utilities {
   .section-gap {
-    @apply py-10 md:py-14;
+    @apply py-16 md:py-24;
   }
 }

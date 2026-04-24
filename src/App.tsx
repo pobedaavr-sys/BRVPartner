@@ -6,10 +6,7 @@
 import { ReactNode } from "react";
 import { motion } from "motion/react";
 import { 
-  BarChart3, 
   Users, 
-  Settings, 
-  Cpu, 
   Briefcase, 
   GraduationCap, 
   Globe, 
@@ -21,44 +18,41 @@ import {
   ShieldCheck,
   Search,
   Target,
-  Rocket,
   Layers,
   Bot,
-  LineChart,
-  HardHat,
-  Stethoscope,
-  Building2,
-  Utensils,
-  Smartphone,
-  Diamond,
-  Heart,
   Palette,
-  Truck,
   BookOpen,
   Presentation,
   Anchor,
-  Clock,
-  Layout,
-  BarChart,
   ClipboardCheck,
-  Play
+  Cpu
 } from "lucide-react";
 
 // --- Components ---
 
-const Section = ({ children, className = "", id = "" }: { children: ReactNode, className?: string, id?: string }) => (
-  <section id={id} className={`section-gap ${className}`}>
+const Reveal = ({ children, delay = 0 }: { children: ReactNode, delay?: number, key?: any }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, margin: "-50px" }}
+    transition={{ duration: 0.6, delay, ease: "easeOut" }}
+  >
+    {children}
+  </motion.div>
+);
+
+const Section = ({ children, className = "", id = "", bg = "bg-transparent" }: { children: ReactNode, className?: string, id?: string, bg?: string, key?: any }) => (
+  <section id={id} className={`section-gap ${bg} ${className}`}>
     <div className="container-custom">
       {children}
     </div>
   </section>
 );
 
-const Card = ({ title, description, result, icon: Icon, className = "" }: { title: string, description: string, result?: string, icon?: any, className?: string }) => (
+const Card = ({ title, description, result, icon: Icon, className = "" }: { title: string, description: string, result?: string, icon?: any, className?: string, key?: any }) => (
   <motion.div 
-    initial={{ opacity: 0, y: 10 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
+    whileHover={{ y: -5 }}
+    transition={{ duration: 0.4, ease: "easeOut" }}
     className={`premium-card h-full flex flex-col ${className}`}
   >
     {Icon && <Icon className="w-5 h-5 text-brand-blue mb-4 shrink-0" />}
@@ -72,26 +66,26 @@ const Card = ({ title, description, result, icon: Icon, className = "" }: { titl
   </motion.div>
 );
 
-const StatCard = ({ value, label, sub = "" }: { value: string, label: string, sub?: string, key?: any }) => (
-  <div className="bg-white p-5 rounded-xl border border-slate-100 flex flex-col justify-center shadow-sm">
+const StatCard = ({ value, label, sub = "", large = false }: { value: string, label: string, sub?: string, large?: boolean, key?: any }) => (
+  <div className={`bg-white border border-slate-100 flex flex-col justify-center shadow-sm rounded-2xl transition-all duration-300 hover:shadow-md ${large ? 'p-8 ring-1 ring-brand-blue/5' : 'p-5'}`}>
     <div className="flex items-baseline gap-1">
-      <span className="text-2xl font-black text-brand-blue tracking-tighter">{value}</span>
-      {sub && <span className="text-[10px] font-bold text-slate-400 uppercase ml-0.5">{sub}</span>}
+      <span className={`${large ? 'text-4xl' : 'text-2xl'} font-black text-brand-blue tracking-tighter`}>{value}</span>
+      {sub && <span className={`${large ? 'text-xs' : 'text-[10px]'} font-bold text-slate-400 uppercase ml-0.5`}>{sub}</span>}
     </div>
-    <p className="text-[9px] uppercase tracking-widest text-slate-500 mt-1.5 font-bold leading-tight">{label}</p>
+    <p className={`${large ? 'text-[11px]' : 'text-[9px]'} uppercase tracking-widest text-slate-500 mt-2 font-bold leading-tight`}>{label}</p>
   </div>
 );
 
-const StepCard = ({ number, title, description }: { number: string, title: string, description: string }) => (
-  <div className="relative p-6 bg-white border border-slate-100 rounded-xl shadow-sm">
-    <div className="text-3xl font-black text-brand-blue/5 absolute top-4 right-6 leading-none select-none">{number}</div>
+const StepCard = ({ number, title, description }: { number: string, title: string, description: string, key?: any }) => (
+  <div className="relative p-7 bg-white border border-slate-100 rounded-2xl shadow-sm hover:border-brand-blue/20 transition-all duration-300">
+    <div className="text-4xl font-black text-brand-blue/5 absolute top-4 right-6 leading-none select-none">{number}</div>
     <h3 className="text-sm font-bold text-brand-blue mb-2 uppercase tracking-tight">{title}</h3>
     <p className="text-[12px] text-slate-600 leading-relaxed">{description}</p>
   </div>
 );
 
 const Tag = ({ text }: { text: string, key?: any }) => (
-  <span className="bg-white border border-slate-200 px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-tight text-slate-600 hover:border-brand-blue hover:text-brand-blue transition-colors cursor-default">
+  <span className="bg-white border border-slate-200 px-3.5 py-2 rounded-xl text-[10px] font-bold uppercase tracking-tight text-slate-600 hover:border-brand-blue hover:text-brand-blue transition-all cursor-default shadow-sm">
     {text}
   </span>
 );
@@ -110,8 +104,14 @@ export default function App() {
     }, 1000);
   };
 
+  const images = {
+    hero: "https://raw.githubusercontent.com/pobedaavr-sys/karierakons/main/IMG_0106.jpg",
+    meeting: "https://raw.githubusercontent.com/pobedaavr-sys/BrVB2BConsultant/218c9e9e126ba487e78636c713436c4668cf1ba5/%D1%80%D0%B0%D0%B1%D0%BE%D1%87%D0%B0%D1%8F%20%D0%B2%D1%81%D1%82%D1%80%D0%B5%D1%87%D0%B0%20%D1%81%20%D1%81%D0%BE%D0%B1%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%B8%D0%BA%D0%BE%D0%BC.png",
+    facilitation: "https://raw.githubusercontent.com/pobedaavr-sys/BrVB2BConsultant/218c9e9e126ba487e78636c713436c4668cf1ba5/%D1%80%D0%B0%D0%B1%D0%BE%D1%87%D0%B0%D1%8F%20%D1%84%D0%B0%D1%81%D0%B8%D0%BB%D0%B8%D1%82%D0%B0%D1%86%D0%B8%D1%8F.png"
+  };
+
   return (
-    <div className="font-sans selection:bg-brand-blue selection:text-white bg-brand-gray text-brand-ink">
+    <div className="font-sans selection:bg-brand-blue selection:text-white bg-brand-gray text-brand-ink overflow-x-hidden">
       {/* Navigation */}
       <nav className="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
         <div className="container-custom h-14 flex items-center justify-between">
@@ -124,7 +124,7 @@ export default function App() {
           </div>
           <button 
             onClick={handleTelegramContact}
-            className="bg-brand-blue text-white px-4 py-2.5 rounded-lg text-[10px] font-bold uppercase tracking-widest hover:bg-brand-accent transition-all ring-offset-2 hover:ring-2 ring-brand-blue/10"
+            className="bg-brand-blue text-white px-5 py-2.5 rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-brand-accent transition-all shadow-lg shadow-brand-blue/10"
           >
             Связаться
           </button>
@@ -132,419 +132,386 @@ export default function App() {
       </nav>
 
       {/* Hero Section */}
-      <Section className="pt-28 pb-10">
-        <div className="grid lg:grid-cols-12 gap-10 items-center">
+      <Section className="pt-28 pb-12">
+        <div className="grid lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-8">
             <motion.div 
-              initial={{ opacity: 0, x: -20 }}
+              initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
             >
-              <span className="inline-block text-[10px] font-bold uppercase tracking-[0.2em] text-brand-blue mb-4 bg-brand-blue/5 px-3 py-1 rounded-full">
+              <span className="inline-block text-[10px] font-bold uppercase tracking-[0.25em] text-brand-blue mb-5 bg-brand-blue/5 px-4 py-1.5 rounded-full">
                 Роман Беляев — стратегический партнёр собственника
               </span>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.05] mb-6 text-brand-blue tracking-tighter text-balance">
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[0.95] mb-8 text-brand-blue tracking-tighter text-balance">
                 Навожу порядок в людях, процессах, продукте и управлении
               </h1>
-              <p className="text-base md:text-lg text-slate-600 mb-8 leading-relaxed max-w-2xl font-light">
+              <p className="text-base md:text-lg text-slate-600 mb-10 leading-relaxed max-w-2xl font-light">
                 Помогаю компаниям разобраться, где бизнес теряет деньги, время и управляемость, а затем собрать рабочую систему изменений — от диагностики и структуры до автоматизации, AI и внедрения.
               </p>
               
-              <div className="space-y-6">
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+              <div className="space-y-8">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-5">
                   <button 
                     onClick={handleTelegramContact}
-                    className="bg-brand-blue text-white px-8 py-4 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-brand-accent transition-all shadow-xl shadow-brand-blue/20 flex items-center justify-center gap-2"
+                    className="bg-brand-blue text-white px-10 py-4.5 rounded-2xl font-bold text-[11px] uppercase tracking-[0.15em] hover:bg-brand-accent transition-all shadow-2xl shadow-brand-blue/20 flex items-center justify-center gap-3 group"
                   >
                     Связаться со мной
-                    <ArrowRight size={14} />
+                    <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                   </button>
                   <button 
                     onClick={handleTelegramContact}
-                    className="bg-white text-brand-blue border border-slate-200 px-8 py-4 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-slate-50 transition-all flex items-center justify-center"
+                    className="bg-white text-brand-blue border border-slate-200 px-10 py-4.5 rounded-2xl font-bold text-[11px] uppercase tracking-[0.15em] hover:bg-slate-50 transition-all flex items-center justify-center"
                   >
                     Оставить запрос
                   </button>
                 </div>
-                <p className="text-[11px] text-slate-400 font-bold uppercase tracking-wide border-l-2 border-slate-200 pl-4">
-                  Не просто даю рекомендации, а перевожу задачу в понятный план, подрядчиков, внедрение и результат.
-                </p>
+                <div className="flex items-center gap-4 border-l-2 border-brand-blue/10 pl-6 h-10">
+                  <span className="text-[11px] text-slate-400 font-bold uppercase tracking-wide">
+                    Не даю советы, а создаю рабочие решения и результат.
+                  </span>
+                </div>
               </div>
             </motion.div>
           </div>
 
-          <div className="lg:col-span-4 hidden lg:block">
+          <div className="lg:col-span-4 relative group">
             <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2 }}
-              className="relative aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl border border-white"
+              transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
+              className="relative aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-[0_40px_100px_-20px_rgba(26,54,93,0.25)] border-[8px] border-white"
             >
               <img 
-                src="https://raw.githubusercontent.com/pobedaavr-sys/karierakons/main/IMG_0106.jpg" 
+                src={images.hero} 
                 alt="Роман Беляев" 
-                className="absolute inset-0 w-full h-full object-cover object-top filter contrast-[1.1] grayscale hover:grayscale-0 transition-all duration-1000"
+                width="800"
+                height="1000"
+                className="absolute inset-0 w-full h-full object-cover object-top contrast-[1.05] grayscale brightness-105 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-1000"
+                loading="eager"
+                fetchPriority="high"
               />
-              <div className="absolute bottom-6 left-6 right-6 p-4 bg-white/90 backdrop-blur-md rounded-2xl border border-white shadow-lg">
-                <div className="text-[10px] font-black uppercase tracking-widest text-brand-blue mb-0.5">B2B STRATEGY PARTNER</div>
-                <div className="text-[9px] text-slate-500 font-bold uppercase">Управленец-практик</div>
+              <div className="absolute top-8 right-8 bg-white/90 backdrop-blur-md px-4 py-2 rounded-2xl border border-white shadow-xl">
+                <div className="text-[9px] font-black uppercase tracking-widest text-brand-blue">STRATEGY PARTNER</div>
               </div>
             </motion.div>
+            <div className="absolute -bottom-6 -left-6 bg-brand-blue text-white p-6 rounded-3xl shadow-2xl max-w-[200px] hidden xl:block">
+              <p className="text-[10px] font-bold uppercase tracking-widest leading-relaxed opacity-90">Управленец-практик и внешний усилитель бизнеса</p>
+            </div>
           </div>
-        </div>
-
-        {/* Hero Trust Cards */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-12">
-          <StatCard value="20+" label="управленческого опыта" sub="лет" />
-          <StatCard value="18" label="работы в консалтинге" sub="лет" />
-          <StatCard value="1600+" label="разборов с предпринимателями" />
-          <StatCard value="4" label="выведены из кризиса на стабильные показатели" sub="компании" />
         </div>
       </Section>
 
-      {/* New Block: Who Am I */}
-      <Section id="who-am-i" className="bg-white border-y border-slate-100 py-12 md:py-16">
-        <div className="mb-10">
-          <h2 className="text-xl md:text-2xl font-bold text-brand-blue uppercase tracking-tight">Кто я и почему меня стоит слушать</h2>
-        </div>
-        <div className="grid lg:grid-cols-10 gap-x-12 lg:gap-x-16 gap-y-10 items-start">
-          <div className="lg:col-span-6 space-y-6 text-sm md:text-base leading-relaxed text-slate-700 font-medium">
-            <p>
-              Роман Беляев — стратегический партнёр собственника, который помогает компаниям переходить от ручного управления к более зрелой и устойчивой системе.
-            </p>
-            <p>
-              Я подключаюсь тогда, когда бизнесу нужен не просто совет, а человек, который поможет собрать управленческий контур: структуру, ключевые функции, процессы, продуктовую логику, обучение команды, продажи, автоматизацию и внешний контур.
-            </p>
-            <p className="opacity-75">
-              Моя сильная сторона — видеть бизнес целиком: от целей собственника и логики продукта до людей, процессов, денег, подрядчиков, автоматизации и внедрения.
-            </p>
-          </div>
-          <div className="lg:col-span-4 flex flex-col gap-4">
-            {[
-              { icon: Target, text: "стратегический партнёр собственника" },
-              { icon: Zap, text: "практическое усиление управления" },
-              { icon: ShieldCheck, text: "от диагностики до внедрения" }
-            ].map((item, i) => (
-              <div key={i} className="flex items-center gap-4 bg-brand-gray/40 p-4 rounded-xl border border-slate-100 hover:border-slate-200 transition-all shadow-sm">
-                <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shrink-0 shadow-sm border border-slate-100">
-                  <item.icon size={18} className="text-brand-blue" />
-                </div>
-                <span className="text-[10px] font-bold uppercase tracking-tight text-brand-blue leading-snug">{item.text}</span>
+      {/* Block: Who Am I + First Image */}
+      <Section id="who-am-i" bg="bg-white" className="border-y border-slate-100">
+        <div className="grid lg:grid-cols-2 gap-x-20 gap-y-12 items-center">
+          <Reveal>
+            <div className="relative">
+              <div className="aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl relative z-10 group">
+                <img 
+                  src={images.meeting} 
+                  alt="Рабочая встреча с собственником" 
+                  className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" 
+                  loading="lazy"
+                  decoding="async"
+                  width="800"
+                  height="600"
+                />
               </div>
-            ))}
-          </div>
+              <div className="absolute -top-6 -left-6 w-32 h-32 bg-brand-blue/5 rounded-full -z-10 blur-2xl"></div>
+              <div className="absolute -bottom-6 -right-6 w-48 h-48 bg-slate-100 rounded-full -z-10 blur-3xl"></div>
+            </div>
+          </Reveal>
+          
+          <Reveal>
+            <div className="space-y-8">
+              <div className="space-y-3">
+                <h2 className="text-2xl md:text-3xl font-bold text-brand-blue uppercase tracking-tight">Кто я и почему меня стоит слушать</h2>
+                <div className="w-16 h-1 bg-brand-blue/20 rounded-full"></div>
+              </div>
+              
+              <div className="space-y-5 text-sm md:text-base leading-relaxed text-slate-700">
+                <p className="font-bold text-brand-blue/90">
+                  Роман Беляев — стратегический партнёр собственника, который помогает компаниям переходить от ручного управления к более зрелой и устойчивой системе.
+                </p>
+                <p>
+                  Я подключаюсь тогда, когда бизнесу нужен не просто совет, а человек, который поможет собрать управленческий контур: структуру, ключевые функции, процессы, продуктовую логику, обучение команды, продажи, автоматизацию и внешний контур.
+                </p>
+                <p className="text-slate-500 italic">
+                  Моя сильная сторона — видеть бизнес целиком: от целей собственника и логики продукта до людей, процессов, денег, подрядчиков, автоматизации и внедрения.
+                </p>
+              </div>
+            </div>
+          </Reveal>
         </div>
       </Section>
 
       {/* Proof Block */}
-      <Section className="bg-slate-50/50">
-        <div className="mb-10">
-          <h2 className="text-xl md:text-2xl font-bold text-brand-blue uppercase tracking-tight mb-2">Почему мой опыт имеет вес для бизнеса</h2>
-          <p className="text-[11px] text-slate-500 font-bold uppercase tracking-widest pl-1">Не про абстрактную экспертизу, а про управленческий масштаб и реальные результаты.</p>
-        </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <Card 
-            icon={Briefcase}
-            title="20+ лет в управлении" 
-            description="Опыт работы топ-менеджером и руководителем в компаниях из разных сфер."
-          />
-          <Card 
-            icon={Anchor}
-            title="18 лет в консалтинге" 
-            description="Практика сопровождения собственников и компаний в вопросах роста, структуры, продаж и управления."
-          />
-          <Card 
-            icon={TrendingUp}
-            title="4 компании выведены из кризиса" 
-            description="За последние 5 лет помог вывести компании на стабильные показатели по обороту и чистой прибыли."
-          />
-          <Card 
-            icon={ClipboardCheck}
-            title="193+ млн ₽ выигранных тендеров" 
-            description="Реальный деловой результат, а не просто консультирование."
-          />
-          <Card 
-            icon={Layers}
-            title="18+ новых продуктов и 7 брендов" 
-            description="Опыт запуска, упаковки и продвижения новых направлений."
-          />
-          <Card 
-            icon={Search}
-            title="1600+ разборов с бизнесом" 
-            description="Большая практика на реальных запросах предпринимателей и руководителей."
-          />
+      <Section className="bg-slate-50/30">
+        <Reveal>
+          <div className="mb-14 text-center">
+            <h2 className="text-2xl md:text-4xl font-bold text-brand-blue uppercase tracking-tight mb-4 text-balance">Почему меня выбирают собственники компаний</h2>
+            <p className="text-[11px] text-slate-500 font-bold uppercase tracking-[0.2em] max-w-xl mx-auto">Не про абстрактную экспертизу, а про масштаб, практику и реальные результаты.</p>
+          </div>
+        </Reveal>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[
+            { icon: Briefcase, t: "20+ лет в управлении", d: "Опыт работы топ-менеджером и руководителем в компаниях из разных сфер." },
+            { icon: Anchor, t: "18 лет в консалтинге", d: "Практика сопровождения собственников и компаний в вопросах роста, структуры и управления." },
+            { icon: TrendingUp, t: "4 компании из кризиса", d: "За последние 5 лет помог вывести компании на стабильные показатели по обороту и чистой прибыли." },
+            { icon: ClipboardCheck, t: "193+ млн ₽ тендеров", d: "Реальный деловой результат, подтверждённый выигранными проектами." },
+            { icon: Layers, t: "18+ продуктов и 7 брендов", d: "Опыт запуска, упаковки и продвижения новых направлений с нуля." },
+            { icon: Search, t: "1600+ разборов", d: "Большая практика на реальных запросах предпринимателей и руководителей." }
+          ].map((card, i) => (
+            <Reveal key={i} delay={i * 0.1}>
+              <Card icon={card.icon} title={card.t} description={card.d} />
+            </Reveal>
+          ))}
         </div>
       </Section>
 
-      {/* Expertise Section (Overhaul) */}
-      <Section id="services">
-        <div className="mb-10 flex items-end justify-between border-b border-slate-200 pb-3">
-          <h2 className="text-xl font-bold text-brand-blue uppercase tracking-tight">Чем могу быть полезен</h2>
-          <span className="text-[9px] text-slate-400 uppercase tracking-widest font-extrabold hidden sm:block">8 Направлений компетенций</span>
-        </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <Card 
-            icon={Target}
-            title="Стратегия и управление" 
-            description="Диагностика бизнеса, логика изменений и сборка управленческой системы."
-          />
-          <Card 
-            icon={Users}
-            title="HR и команда" 
-            description="Найм, роли, профили должностей, адаптация, развитие и кадровый резерв."
-          />
-          <Card 
-            icon={Palette}
-            title="Продажи и продукт" 
-            description="Доупаковка продукта, customer development, переговорный контур и усиление коммерческой модели."
-          />
-          <Card 
-            icon={ShieldCheck}
-            title="Контроль качества" 
-            description="Стандарты, инструкции, адаптация и воспроизводимость результата."
-          />
-          <Card 
-            icon={GraduationCap}
-            title="Внутренняя академия" 
-            description="Обучение под задачи бизнеса, развитие сотрудников и передача внутренних знаний."
-          />
-          <Card 
-            icon={Cpu}
-            title="IT, автоматизация и AI" 
-            description="Оцифровка пути клиента и пути продукта, точки автоматизации, ТЗ, подрядчики и внедрение."
-          />
-          <Card 
-            icon={Globe}
-            title="PR / GR / внешний контур" 
-            description="Площадки, мероприятия, деловые связи, отраслевой и государственный контур."
-          />
-          <Card 
-            icon={Gamepad2}
-            title="Бизнес-игры и стратегические форматы" 
-            description="Форматы для обучения, переговорной практики и проработки бизнес-задач."
-          />
+      {/* Expertise Section */}
+      <Section id="services" bg="bg-white" className="border-y border-slate-100">
+        <Reveal>
+          <div className="mb-14 flex items-end justify-between border-b border-slate-200 pb-5">
+            <h2 className="text-2xl font-bold text-brand-blue uppercase tracking-tight">Чем могу быть полезен</h2>
+            <span className="text-[10px] text-slate-400 uppercase tracking-widest font-extrabold hidden sm:block italic">Focus Areas</span>
+          </div>
+        </Reveal>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <Reveal delay={0.1}><Card icon={Target} title="Стратегия и управление" description="Диагностика бизнеса, логика изменений и сборка управленческой системы." /></Reveal>
+          <Reveal delay={0.2}><Card icon={Users} title="HR и команда" description="Найм, роли, профили должностей, адаптация, развитие и кадровый резерв." /></Reveal>
+          <Reveal delay={0.3}><Card icon={Palette} title="Продажи и продукт" description="Доупаковка продукта, customer development, усиление коммерческой модели." /></Reveal>
+          <Reveal delay={0.4}><Card icon={ShieldCheck} title="Контроль качества" description="Стандарты, инструкции, адаптация и воспроизводимость результата." /></Reveal>
+          <Reveal delay={0.5}><Card icon={GraduationCap} title="Внутренняя академия" description="Обучение под задачи бизнеса, развитие сотрудников и передача знаний." /></Reveal>
+          <Reveal delay={0.6}><Card icon={Cpu} title="IT, автоматизация и AI" description="Оцифровка пути клиента, ТЗ, выбор подрядчиков и контроль внедрения." /></Reveal>
+          <Reveal delay={0.7}><Card icon={Globe} title="PR / GR / внешний контур" description="Площадки, мероприятия, деловые связи, отраслевой и госконтур." /></Reveal>
+          <Reveal delay={0.8}><Card icon={Gamepad2} title="Стратегические форматы" description="Бизнес-игры для обучения, переговорной практики и проработки задач." /></Reveal>
         </div>
       </Section>
 
       {/* How I Work Section */}
-      <Section id="process" className="bg-white border-y border-slate-100">
-        <div className="mb-10">
-          <h2 className="text-xl font-bold text-brand-blue uppercase tracking-tight">Как я подключаюсь к бизнесу</h2>
-        </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <StepCard 
-            number="01"
-            title="Диагностика"
-            description="Разбираюсь, где компания теряет время, деньги и управляемость."
-          />
-          <StepCard 
-            number="02"
-            title="Сборка логики изменений"
-            description="Определяю, что нужно пересобрать, что усилить, а что действительно стоит автоматизировать."
-          />
-          <StepCard 
-            number="03"
-            title="Проектная постановка"
-            description="Собираю требования, роли, процессы, подрядчиков, инструменты и логику внедрения."
-          />
-          <StepCard 
-            number="04"
-            title="Запуск в работу"
-            description="Сопровождаю изменения до рабочего результата: внедрение, обучение, контроль, корректировка."
-          />
+      <Section id="process">
+        <Reveal>
+          <div className="mb-14 text-center">
+            <h2 className="text-2xl md:text-3xl font-bold text-brand-blue uppercase tracking-tight">Как я подключаюсь к бизнесу</h2>
+            <div className="w-12 h-1 bg-brand-blue mx-auto mt-4 rounded-full"></div>
+          </div>
+        </Reveal>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <Reveal delay={0.1}><StepCard number="01" title="Диагностика" description="Разбираюсь, где компания теряет время, деньги и управляемость." /></Reveal>
+          <Reveal delay={0.2}><StepCard number="02" title="Логика изменений" description="Определяю, что нужно пересобрать, а что действительно стоит автоматизировать." /></Reveal>
+          <Reveal delay={0.3}><StepCard number="03" title="Постановка" description="Собираю требования, роли, процессы, подрядчиков и логику внедрения." /></Reveal>
+          <Reveal delay={0.4}><StepCard number="04" title="Запуск" description="Сопровождаю внедрение, обучение и контроль до рабочего результата." /></Reveal>
         </div>
       </Section>
 
-      {/* Business & IT Link */}
-      <Section className="bg-brand-blue text-white rounded-3xl py-12 px-8 md:px-12 my-10 shadow-2xl overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
-        <div className="grid md:grid-cols-2 gap-12 items-center relative z-10">
-          <div>
-            <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-tight mb-6">Связываю бизнес и IT в одну рабочую систему</h2>
-            <div className="space-y-4 text-sm md:text-base font-light text-slate-300 leading-relaxed">
-              <p>Я выступаю связующим звеном между собственником, бизнесом, подрядчиками и IT-командой.</p>
-              <p>Помогаю понять, какие процессы действительно нужно автоматизировать, где AI даст реальную пользу, как правильно сформулировать задачу, подготовить ТЗ, выбрать подрядчиков и проконтролировать реализацию так, чтобы внедрение работало на бизнес, а не превращалось в дорогую игрушку.</p>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 gap-2">
-            {[
-              "оценка процессов",
-              "карта автоматизации",
-              "постановка задачи",
-              "выбор подрядчиков",
-              "контроль внедрения"
-            ].map((point, i) => (
-              <div key={i} className="flex items-center gap-4 bg-white/10 p-3.5 rounded-xl border border-white/10 hover:bg-white/15 transition-all">
-                <CheckCircle2 size={16} className="text-brand-gray opacity-60" />
-                <span className="text-[11px] font-bold uppercase tracking-widest">{point}</span>
+      {/* Strategic Formats Section */}
+      <Section id="formats" bg="bg-brand-gray/30" className="border-y border-slate-100">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <Reveal>
+            <div className="space-y-8">
+              <div className="space-y-4">
+                <h2 className="text-2xl md:text-3xl font-bold text-brand-blue uppercase tracking-tight">Игровые и стратегические форматы</h2>
+                <div className="w-16 h-1 bg-brand-blue/20 rounded-full"></div>
               </div>
-            ))}
+              <div className="space-y-6 text-sm md:text-base leading-relaxed text-slate-700">
+                <p>
+                  Провожу авторские игровые и стратегические сессии для обучения, переговорной практики и проработки бизнес-задач.
+                </p>
+                <p>
+                  Использую эти форматы не как развлечение, а как рабочий инструмент для включения команды, обсуждения сложных ситуаций, развития навыков и поиска решений по реальным задачам бизнеса.
+                </p>
+              </div>
+              <div className="bg-white border border-slate-100 p-6 rounded-2xl shadow-sm border-l-4 border-l-brand-blue">
+                <p className="text-[11px] font-bold text-brand-blue uppercase tracking-widest leading-loose">
+                  За 2025–2026 годы провёл <span className="text-brand-accent">76 таких сессий</span>, в которых участвовало более 1100 человек из разных компаний и городов России.
+                </p>
+              </div>
+            </div>
+          </Reveal>
+          <Reveal>
+            <div className="aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl relative group">
+              <img 
+                src={images.facilitation} 
+                alt="Рабочая фасилитация" 
+                className="w-full h-full object-cover grayscale brightness-110 group-hover:grayscale-0 transition-all duration-700" 
+                loading="lazy"
+                decoding="async"
+                width="800"
+                height="600"
+              />
+            </div>
+          </Reveal>
+        </div>
+      </Section>
+
+      {/* Business & IT Link - Accent Block */}
+      <Section className="py-0">
+        <div className="bg-brand-blue text-white rounded-[3rem] p-10 md:p-20 shadow-2xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-[100px]"></div>
+          <div className="grid lg:grid-cols-2 gap-16 items-center relative z-10">
+            <Reveal>
+              <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight mb-8 leading-tight">Связываю бизнес и IT в одну рабочую систему</h2>
+              <div className="space-y-6 text-sm md:text-lg font-light text-slate-300 leading-relaxed">
+                <p>Я выступаю связующим звеном между собственником, бизнесом, подрядчиками и IT-командой.</p>
+                <p>Помогаю понять, какие процессы действительно нужно автоматизировать, где AI даст реальную пользу, как правильно сформулировать задачу и проконтролировать реализацию.</p>
+              </div>
+            </Reveal>
+            <div className="grid grid-cols-1 gap-3">
+              {[
+                "оценка бизнес-процессов",
+                "карта автоматизации",
+                "постановка задачи (ТЗ)",
+                "выбор технологических подрядчиков",
+                "контроль внедрения и обучения"
+              ].map((point, i) => (
+                <Reveal key={i} delay={0.1 * i}>
+                  <div className="flex items-center gap-5 bg-white/10 p-4.5 rounded-2xl border border-white/10 hover:bg-white/15 transition-all group">
+                    <CheckCircle2 size={18} className="text-white opacity-40 group-hover:opacity-100 transition-opacity" />
+                    <span className="text-[12px] font-bold uppercase tracking-widest">{point}</span>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
           </div>
         </div>
       </Section>
 
-      {/* Investment Track */}
-      <Section className="bg-white border-b border-slate-100">
-        <div className="max-w-3xl mb-10">
-          <h2 className="text-xl font-bold text-brand-blue uppercase tracking-tight mb-4">Инвестиционный трек</h2>
-          <p className="text-sm text-slate-600 leading-relaxed">
-            Помогаю подготовить компанию к привлечению капитала: сделать её более понятной, прозрачной и привлекательной для инвестора. Выстраиваю инвестиционную логику, помогаю упаковать проект и, при необходимости, сопровождаю процесс поиска инвестора под задачи бизнеса.
-          </p>
-        </div>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          {[
-            { t: "Подготовка компании", d: "к инвестициям" },
-            { t: "Упаковка", d: "проекта" },
-            { t: "Инвестиционная", d: "логика" },
-            { t: "Сопровождение", d: "поиска инвестора" }
-          ].map((item, i) => (
-            <div key={i} className="bg-brand-gray border border-slate-100 p-5 rounded-xl text-center">
-              <div className="text-[11px] font-black text-brand-blue uppercase tracking-tight mb-1">{item.t}</div>
-              <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">{item.d}</div>
+      {/* Investment & Internal Blocks (Side by Side editorial style) */}
+      <Section className="pb-0">
+        <div className="grid lg:grid-cols-2 gap-20">
+          <Reveal>
+            <div className="space-y-10">
+              <div className="space-y-4">
+                <h2 className="text-2xl font-bold text-brand-blue uppercase tracking-tight">Инвестиционный трек</h2>
+                <p className="text-sm text-slate-600 leading-relaxed max-w-md">
+                  Подготовка компании к привлечению капитала: прозрачность, логика и инвестиционная упаковка проекта.
+                </p>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                {["Подготовка к инвестициям", "Упаковка проекта", "Инвестиционная логика", "Поиск инвестора"].map((item, i) => (
+                  <div key={i} className="bg-brand-gray border border-slate-100 p-4 rounded-2xl text-center flex items-center justify-center min-h-[60px]">
+                    <div className="text-[10px] font-black text-brand-blue uppercase tracking-widest">{item}</div>
+                  </div>
+                ))}
+              </div>
             </div>
-          ))}
-        </div>
-      </Section>
-
-      {/* Internal Circuit */}
-      <Section>
-        <div className="max-w-3xl mb-10">
-          <h2 className="text-xl font-bold text-brand-blue uppercase tracking-tight mb-4">Что усиливаю внутри компании</h2>
-          <p className="text-sm text-slate-600 leading-relaxed">
-            Помогаю создавать корпоративные базы знаний, внутренние академии, управленческие контуры и практические форматы развития команды. Для меня важно, чтобы знания, правила и подходы не держались на нескольких людях, а становились частью системы.
-          </p>
-        </div>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          {[
-            { title: "корпоративные базы знаний", icon: BookOpen },
-            { title: "внутренние академии", icon: GraduationCap },
-            { title: "развитие команды", icon: Users },
-            { title: "культурный код компании", icon: ShieldCheck }
-          ].map((item, i) => (
-            <div key={i} className="premium-card text-center flex flex-col items-center">
-              <item.icon size={20} className="text-brand-blue mb-4 opacity-70" />
-              <div className="text-[10px] font-bold text-brand-blue uppercase tracking-widest">{item.title}</div>
+          </Reveal>
+          <Reveal>
+            <div className="space-y-10">
+              <div className="space-y-4">
+                <h2 className="text-2xl font-bold text-brand-blue uppercase tracking-tight">Внутренний контур</h2>
+                <p className="text-sm text-slate-600 leading-relaxed max-w-md">
+                  Создание корпоративных баз знаний и внутренних академий для масштабирования системы управления.
+                </p>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                {["Базы знаний", "Академии", "Развитие команды", "Культурный код"].map((item, i) => (
+                  <div key={i} className="bg-white border border-slate-100 p-6 rounded-2xl shadow-sm text-center flex items-center justify-center min-h-[80px] hover:shadow-md transition-shadow">
+                    <div className="text-[10px] font-black text-brand-blue uppercase tracking-widest">{item}</div>
+                  </div>
+                ))}
+              </div>
             </div>
-          ))}
+          </Reveal>
         </div>
       </Section>
 
-      {/* Strategic Formats (Rebuilt) */}
-      <Section className="bg-brand-blue text-white rounded-3xl py-12 px-8 my-10 text-center flex flex-col items-center">
-        <Presentation size={32} className="mb-6 opacity-40" />
-        <h2 className="text-2xl font-bold uppercase tracking-tight mb-4">Игровые и стратегические форматы</h2>
-        <p className="max-w-2xl text-sm md:text-base font-light text-slate-300 leading-relaxed mb-8">
-          Провожу авторские игровые и стратегические сессии для обучения, переговорной практики и проработки бизнес-задач.
-        </p>
-        <div className="inline-block bg-white/10 px-6 py-3 rounded-full border border-white/20">
-          <span className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] text-white">
-            За 2025–2026 годы провёл <span className="text-brand-accent brightness-150">76 таких сессий</span>, в которых участвовало более 1100 человек
-          </span>
-        </div>
-      </Section>
-
-      {/* Results in Figures (Overhaul) */}
-      <Section id="results" className="bg-slate-50/50">
-        <div className="mb-10 text-center">
-          <h2 className="text-xl md:text-2xl font-bold text-brand-blue uppercase tracking-tight">Результаты в цифрах</h2>
-          <p className="text-[10px] text-slate-500 font-bold uppercase tracking-[0.1em] mt-1">Часть показателей, которые подтверждают практический эффект моей работы</p>
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <StatCard value="20+" label="в управлении компаниями" sub="лет" />
-          <StatCard value="18" label="работы в консалтинге" sub="лет" />
-          <StatCard value="1600+" label="разборов с предпринимателями" />
-          <StatCard value="250+" label="совокупный экономический эффект" sub="млн ₽" />
-          <StatCard value="193+" label="выигранные тендеры за 5 лет" sub="млн ₽" />
-          <StatCard value="18+" label="кейсов запуска новых продуктов" />
-          <StatCard value="7" label="кейсов создания и запуска новых брендов" />
-          <StatCard value="25%" label="снижение операционных издержек" />
-        </div>
-      </Section>
-
-      {/* Niches Section */}
-      <Section className="bg-white border-y border-slate-100">
-        <h2 className="text-xl font-bold text-brand-blue uppercase tracking-tight mb-8">С какими бизнесами работал</h2>
-        <div className="flex flex-wrap gap-2">
-          {[
-            "недвижимость", "коммерческая недвижимость", "строительство", "медицина", 
-            "образование", "услуги", "лингвистический бизнес", "транспорт", "реклама", 
-            "колл-центр", "гостиницы", "рестораны", "производство", "мебель", "ЖКХ", 
-            "бухгалтерские услуги", "IT", "товары для детей", "ювелирные изделия", 
-            "салоны красоты", "эко-проекты"
-          ].map((niche, i) => (
-            <Tag key={i} text={niche} />
-          ))}
-        </div>
-      </Section>
-
-      {/* When Especially Useful */}
-      <Section>
-        <h2 className="text-xl font-bold text-brand-blue uppercase tracking-tight mb-8">Когда я особенно полезен</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {[
-            "когда в компании много хаоса и нет понятной логики управления",
-            "когда собственник держит слишком многое на себе",
-            "когда нужно понять, что пересобрать, а что автоматизировать",
-            "когда бизнес упёрся в рост и не хватает управляемости",
-            "когда нужно усилить продажи, продукт или команду",
-            "когда нужен внешний сильный партнёр, а не просто подрядчик"
-          ].map((text, i) => (
-            <div key={i} className="bg-white border border-slate-100 p-5 rounded-xl shadow-sm flex items-start gap-4">
-              <CheckCircle2 size={16} className="text-brand-blue shrink-0 mt-0.5" />
-              <p className="text-[12px] text-slate-700 font-medium leading-relaxed">{text}</p>
-            </div>
-          ))}
+      {/* Niches & Useful When */}
+      <Section bg="bg-white" className="border-y border-slate-100">
+        <div className="grid lg:grid-cols-12 gap-16">
+          <div className="lg:col-span-12">
+            <Reveal>
+              <h2 className="text-xl font-bold text-brand-blue uppercase tracking-tight mb-10">С какими бизнесами работал</h2>
+              <div className="flex flex-wrap gap-2.5">
+                {[
+                  "недвижимость", "строительство", "медицина", "образование", "услуги", 
+                  "лингвистический бизнес", "транспорт", "реклама", "колл-центр", 
+                  "гостиницы", "рестораны", "производство", "мебель", "ЖКХ", 
+                  "бухгалтерские услуги", "IT", "товары для детей", "ювелирные изделия", 
+                  "салоны красоты", "эко-проекты"
+                ].map((niche, i) => (
+                  <Tag key={i} text={niche} />
+                ))}
+              </div>
+            </Reveal>
+          </div>
+          <div className="lg:col-span-12 mt-10">
+            <Reveal>
+              <h2 className="text-xl font-bold text-brand-blue uppercase tracking-tight mb-10 text-center">Когда я особенно полезен</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                {[
+                  "много хаоса и нет понятной логики управления",
+                  "собственник держит слишком многое на себе",
+                  "нужно понять, что пересобрать, а что автоматизировать",
+                  "бизнес упёрся в рост и не хватает управляемости",
+                  "нужно усилить продажи, продукт или команду",
+                  "нужен сильный внешний партнёр, а не просто подрядчик"
+                ].map((text, i) => (
+                  <div key={i} className="bg-slate-50 border border-slate-100 p-6 rounded-2xl flex items-start gap-5 hover:bg-white hover:shadow-lg transition-all duration-300">
+                    <div className="w-8 h-8 rounded-full bg-brand-blue/5 flex items-center justify-center shrink-0">
+                      <CheckCircle2 size={16} className="text-brand-blue" />
+                    </div>
+                    <p className="text-[12px] text-slate-700 font-medium leading-relaxed">{text}</p>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+          </div>
         </div>
       </Section>
 
       {/* Final CTA */}
-      <footer className="bg-slate-900 text-white pt-16 pb-12 mt-12 relative overflow-hidden">
-        <div className="absolute bottom-0 left-0 w-full h-1 bg-brand-blue/30"></div>
+      <footer className="bg-slate-900 text-white pt-24 pb-12 relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-px bg-white/10"></div>
         <div className="container-custom relative z-10">
-          <div className="max-w-3xl mx-auto text-center flex flex-col gap-8">
-            <div>
-              <h2 className="text-xl md:text-2xl font-bold uppercase tracking-tight mb-4 leading-snug">
-                Когда нужен сильный внешний партнёр для изменений
-              </h2>
-              <p className="text-sm md:text-base font-medium text-slate-400 leading-relaxed md:px-16 opacity-90">
-                Если в компании накопился управленческий хаос, рост упёрся в старую модель или нужно собрать систему изменений — давайте обсудим вашу задачу в Telegram.
-              </p>
-            </div>
-            
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <button 
-                onClick={handleTelegramContact}
-                className="bg-white text-slate-900 px-10 py-4 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-slate-100 transition-all flex items-center justify-center gap-3 shadow-xl shadow-white/5"
-              >
-                Связаться со мной
-                <ArrowRight size={16} />
-              </button>
-              <button 
-                onClick={handleTelegramContact}
-                className="border border-slate-700 text-white px-10 py-4 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-slate-800 transition-all"
-              >
-                Оставить запрос
-              </button>
-            </div>
-
-            <div className="pt-16 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] uppercase tracking-widest font-black text-slate-500">
-              <div className="flex flex-col items-center md:items-start gap-1">
-                <span>© 2024 Роман Беляев</span>
-                <span className="opacity-50 text-[8px]">Стратегический партнёр собственника</span>
+          <Reveal>
+            <div className="max-w-4xl mx-auto text-center flex flex-col gap-12">
+              <div className="space-y-6">
+                <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-tight leading-snug">
+                  Когда нужен сильный внешний партнёр для изменений
+                </h2>
+                <p className="text-sm md:text-base font-medium text-slate-400 leading-relaxed md:px-24 opacity-80">
+                  Если в компании накопился управленческий хаос, рост упёрся в старую модель или нужно собрать систему изменений — давайте обсудим вашу задачу в Telegram.
+                </p>
               </div>
-              <div className="flex gap-10">
-                <a 
-                  href="https://t.me/BRV_Roman" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="hover:text-white transition-colors flex items-center gap-2"
+              
+              <div className="flex flex-col sm:flex-row justify-center gap-5">
+                <button 
+                  onClick={handleTelegramContact}
+                  className="bg-white text-slate-900 px-12 py-5 rounded-2xl font-bold text-[11px] uppercase tracking-widest hover:bg-brand-gray transition-all flex items-center justify-center gap-3 shadow-2xl shadow-white/5 group"
                 >
-                  <Bot size={12} className="opacity-40" />
-                  Telegram
-                </a>
+                  Связаться со мной
+                  <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                </button>
+                <button 
+                  onClick={handleTelegramContact}
+                  className="border border-slate-700 text-white px-12 py-5 rounded-2xl font-bold text-[11px] uppercase tracking-widest hover:bg-slate-800 transition-all shadow-xl"
+                >
+                  Оставить запрос
+                </button>
+              </div>
+
+              <div className="pt-24 border-t border-slate-800/50 flex flex-col md:flex-row justify-between items-center gap-8 text-[10px] uppercase tracking-[0.2em] font-bold text-slate-500">
+                <div className="flex flex-col items-center md:items-start gap-2">
+                  <span className="text-white">© 2024 Роман Беляев</span>
+                  <span className="opacity-50 text-[8px] tracking-widest">Стратегический партнёр собственника</span>
+                </div>
+                <div className="flex gap-12">
+                  <a 
+                    href="https://t.me/BRV_Roman" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="hover:text-white transition-colors flex items-center gap-3 group"
+                  >
+                    <Bot size={14} className="opacity-40 group-hover:opacity-100 transition-opacity" />
+                    Telegram
+                  </a>
+                </div>
               </div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </footer>
     </div>
