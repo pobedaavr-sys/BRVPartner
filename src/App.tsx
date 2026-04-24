@@ -226,7 +226,7 @@ export default function App() {
           <Reveal>
             <div className="space-y-8">
               <div className="space-y-3">
-                <h2 className="text-2xl md:text-3xl font-bold text-brand-blue uppercase tracking-tight">Кто я и почему меня стоит слушать</h2>
+                <h2 className="text-2xl md:text-3xl font-bold text-brand-blue uppercase tracking-tight">Обо мне и моей роли в бизнесе</h2>
                 <div className="w-16 h-1 bg-brand-blue/20 rounded-full"></div>
               </div>
               
