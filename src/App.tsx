@@ -120,7 +120,6 @@ export default function App() {
             <a href="#who-am-i" className="hover:text-brand-blue transition-colors">Обо мне</a>
             <a href="#services" className="hover:text-brand-blue transition-colors">Компетенции</a>
             <a href="#process" className="hover:text-brand-blue transition-colors">Алгоритм</a>
-            <a href="#results" className="hover:text-brand-blue transition-colors">Результаты</a>
           </div>
           <button 
             onClick={handleTelegramContact}
